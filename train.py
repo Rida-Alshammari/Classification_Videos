@@ -23,7 +23,7 @@ os.makedirs('./images', exist_ok=True)
 IMG_SIZE = 64
 MAX_FRAMES = 15
 BATCH_SIZE = 16
-EPOCHS = 100
+EPOCHS = 120
 PATIENCE = 10
 PREPROCESSED_DIR = 'preprocessed_data'
 
