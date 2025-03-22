@@ -1,0 +1,136 @@
+النتائج المقدمة تُظهر أداء النموذج على مجموعة الاختبار بناءً على تقرير التصنيف (Classification Report). إليك تحليل مفصل للنتائج:
+
+1. تفسير المقاييس الأساسية:
+الفئة	الدقة (Precision)	الاستدعاء (Recall)	F1-Score	عدد العينات (Support)
+Non-Violent	1.00	0.75	0.86	4
+Violent	0.75	1.00	0.86	3
+الدقة (Accuracy): 86% (7/7 عينات صحيحة)
+
+2. التحليل التفصيلي:
+أ. فئة "Non-Violent":
+الدقة (Precision): 100%
+
+جميع العينات التي صنفها النموذج كـ "غير عنيفة" كانت صحيحة.
+
+الاستدعاء (Recall): 75%
+
+النموذج تعرف على 3 من أصل 4 عينات حقيقية لـ "غير عنيفة".
+
+فاتته عينة واحدة (False Negative).
+
+ب. فئة "Violent":
+الدقة (Precision): 75%
+
+3 من أصل 4 توقعات "عنيفة" كانت صحيحة.
+
+هناك توقع خاطئ واحد (False Positive).
+
+الاستدعاء (Recall): 100%
+
+النموذج تعرف على جميع العينات الحقيقية لـ "عنيفة".
+
+3. التقييم العام:
+توازن الأداء:
+
+النموذج يعاني من trade-off بين الدقة والاستدعاء:
+
+يميل إلى over-predict فئة "Violent" (زيادة False Positives)
+
+under-predict فئة "Non-Violent" (زيادة False Negatives)
+
+نقاط القوة:
+
+أداء جيد في اكتشاف المحتوى العنيف (لا يفوت أي حالات عنف حقيقية)
+
+دقة عالية في تصنيف "Non-Violent"
+
+نقاط الضعف:
+
+ميل لإساءة تصنيف بعض المحتوى غير العنيف كعنيف
+
+تحسين الاستدعاء لـ "Non-Violent" مطلوب
+
+4. توصيات للتحسين:
+أ. معالجة البيانات:
+زيادة حجم البيانات: خاصة للفئات التي لديها أداء ضعيف
+
+موازنة الفئات: التأكد من تساوي عدد العينات في كل فئة
+
+تحسين المعالجة المسبقة: تحسين استخراج الإطارات أو تضمين augmentation
+
+ب. ضبط النموذج:
+تعديل عتبة التصنيف: خفض threshold لفئة "Non-Violent" لتحسين الاستدعاء
+
+تحسين معمارية النموذج:
+
+python
+Copy
+# مثال: إضافة طبقات أكثر تعقيدًا
+model.add(LSTM(128, return_sequences=True))
+model.add(Dropout(0.5))
+ج. تحسين معايير التدريب:
+تعديل معدل التعلم: استخدام Learning Rate Schedule
+
+python
+Copy
+from tensorflow.keras.optimizers.schedules import ExponentialDecay
+lr_schedule = ExponentialDecay(0.001, decay_steps=1000, decay_rate=0.96)
+optimizer = tf.keras.optimizers.Adam(learning_rate=lr_schedule)
+د. استخدام تقنيات متقدمة:
+الانتقاء الطبقي (Stratified Sampling):
+
+python
+Copy
+train_test_split(..., stratify=labels)
+تضمين وزن الفئات (Class Weights):
+
+python
+Copy
+class_weights = {0: 1.2, 1: 0.8}  # تعويض عدم التوازن
+model.fit(..., class_weight=class_weights)
+5. خطوات التحقق:
+فحص البيانات الخاطئة:
+
+تحليل العينات التي تم تصنيفها خطأ (False Positives/Negatives)
+
+python
+Copy
+# مثال: عرض العينات الخاطئة
+incorrect = np.where(y_pred != y_true)[0]
+for idx in incorrect:
+    print(f"Sample {idx}: Predicted {y_pred[idx]}, Actual {y_true[idx]}")
+التحقق من جودة البيانات:
+
+مراجعة تسميات الفيديوهات للتأكد من صحتها
+
+اختبار مع معايير مختلفة:
+
+تقييم النموذج على مجموعة اختبار أكبر
+
+استخدام مقاييس إضافية مثل AUC-ROC
+
+6. مثال لتحسين الكود:
+python
+Copy
+# تحسين Early Stopping
+EarlyStopping(
+    monitor='val_f1_score',  # رصد مقياس مخصص
+    mode='max',
+    patience=10,
+    restore_best_weights=True
+)
+
+# إضافة مقياس F1-Score مخصص
+from tensorflow.keras import backend as K
+
+def f1_score(y_true, y_pred):
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
+    recall = true_positives / (possible_positives + K.epsilon())
+    return 2*((precision*recall)/(precision+recall+K.epsilon()))
+
+model.compile(..., metrics=[f1_score])
+الخلاصة:
+الأداء الحالي جيد لكنه قابل للتحسين، خاصة في تحسين التوازن بين الدقة والاستدعاء. التركيز على تحسين جودة البيانات وضبط معايير النموذج سيساعد في رفع الأداء العام.

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/images/favicon.png" type="image/x-icon">
+    <title>Result Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/result.css">
+</head>
+
+<body>
+    <div class="container">
+        <!--? Start Images -->
+        <div class="images">
+            <img src="/static/images/1.png" alt="Robot">
+        </div>
+        <!--? Start Result Card  -->
+        <div class="result-card">
+            <div
+                class="status-icon {{ 'fas fa-exclamation-triangle violent' if result == 'violent' else 'fas fa-check-circle non-violent' }}">
+            </div>
+            <h3 class="result-Classification">
+                <span class="title">Result: </span>
+                <span
+                    class="{{ 'text-danger background-danger' if result == 'violent' else 'text-success background-success' }}">{{
+                    result }}
+                </span>
+            </h3>
+            <div class="file-details">
+                <p class="file-info"><strong>File Name:</strong> {{ filename }}</p>
+                <p class="file-info"><strong>File Size:</strong> {{ filesize }}</p>
+                <p class="file-info"><strong>File Type:</strong> {{ filetype }}</p>
+            </div>
+            <a href="/" class="btn btn-back">Back Analyze Video</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

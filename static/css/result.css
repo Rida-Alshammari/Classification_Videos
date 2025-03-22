@@ -1,0 +1,137 @@
+body {
+  background-color: #232323;
+  min-height: 90vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+strong {
+  margin-right: 10px;
+}
+
+/*? Start Image */
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px 25px 0px;
+}
+.images {
+  position: relative;
+}
+.images::before {
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 3px;
+  bottom: -40px;
+  background: linear-gradient(90deg, #6528f7, #ffaf00);
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+.images img {
+  width: 500px;
+  filter: drop-shadow(0 0 100px #6528f7);
+}
+
+/*? Start Result Card */
+.result-card {
+  background: #232323;
+  border-radius: 15px;
+  padding: 40px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  backdrop-filter: blur(10px);
+  font-style: italic;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: linear-gradient(90deg, #6528f7 0%, #ffaf00 100%) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: -1;
+}
+.status-icon {
+  font-size: 5em;
+  margin-bottom: 20px;
+}
+.violent {
+  color: #dc3545;
+}
+.background-danger {
+  background: linear-gradient(90deg, #dc3545, #fcab07);
+  color: #232323;
+}
+.non-violent {
+  color: #28a745;
+}
+.background-success {
+  background: linear-gradient(90deg, #28a745, #fcab07);
+  color: #232323;
+}
+.title {
+  color: #fff;
+}
+.file-details {
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  background: #232323;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: fit-content;
+}
+.btn-back {
+  display: inline-block;
+  width: 90%;
+  border: none;
+  outline: none;
+  margin-top: 15px;
+  padding: 15px 25px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 1s;
+  transition: all 0.2s ease;
+  background: linear-gradient(90deg, #ffaf00 0%, #7c00fe 100%);
+}
+.btn-back:hover {
+  transform: translateY(-2px);
+}
+.result-Classification {
+  font-size: 2rem;
+  color: #fff;
+}
+.file-info {
+  position: relative;
+  text-align: start;
+}
+.file-info::before {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  bottom: -8px;
+  background: linear-gradient(90deg, #6528f7, #ffaf00);
+}
+.file-info:nth-of-type(1)::before {
+  width: 40px;
+}
+.file-info:nth-of-type(2)::before {
+  width: 60px;
+}
+.file-info:nth-of-type(3)::before {
+  width: 80px;
+}

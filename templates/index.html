@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/images/favicon.png" type="image/x-icon">
+    <title>Video Classifier</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <!--? Start Upload Box -->
+        <div class="upload-box">
+            <h3 class="title-form">Upload Video For Classification</h3>
+            <!-- Start Form Upload File -->
+            <div class="drag-area" id="dragArea">
+                <i class="fas fa-cloud-upload-alt fa-3x icon-color"></i>
+                <p class="text-decoration">Drop Video Here Or Click To Upload</p>
+                <input type="file" name="file" id="fileInput" hidden accept="video/*">
+            </div>
+            <!-- Start Progress-->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-text"></div>
+                </div>
+            </div>
+            <!-- Start File Information-->
+            <div class="file-info" id="fileInfo" style="display: none;">
+                <div><i class="fas fa-file-video file-icon"></i></div>
+                <div>
+                    <div id="fileName">Video.Ext</div>
+                    <small id="fileDetails">15MB</small>
+                </div>
+            </div>
+            <button class="btn" id="uploadBtn">Analyze Video</button>
+        </div>
+        <!--? Start Images -->
+        <div class="images">
+            <img src="/static/images/2.png" alt="Robot">
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
